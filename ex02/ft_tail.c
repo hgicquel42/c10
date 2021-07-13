@@ -5,9 +5,6 @@
 #include <string.h>
 #include <libgen.h>
 
-// REMOVE
-#include <stdio.h>
-
 #define SIZE 1024
 
 int		ft_strcmp(char *a, char *b);

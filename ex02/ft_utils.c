@@ -1,8 +1,5 @@
 #include <unistd.h>
 
-// REMOVE
-#include <stdio.h>
-
 int	ft_strcmp(char *a, char *b)
 {
 	while (*a && *a == *b)
