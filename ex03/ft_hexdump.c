@@ -95,9 +95,9 @@ int	main(int argc, char **argv)
 	data.count = 0;
 	data.offset = 0;
 	data.buffer = malloc(SIZE * sizeof(char));
-	if (argc < 2)
+	if (argc < 3)
 		ft_read_file(0, &data);
-	index = 1;
+	index = 2;
 	error = 0;
 	while (index < argc)
 		error |= ft_read(argv[0], argv[index++], &data);
