@@ -38,3 +38,15 @@ void	ft_puterr(char *s)
 		i++;
 	write(2, s, i);
 }
+
+void	ft_copy(char *source, char *dest, int size)
+{
+	int	i;
+
+	i = 0 ;
+	while (i < size)
+	{
+		dest[i] = source[i];
+		i++;
+	}
+}

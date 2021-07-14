@@ -5,7 +5,7 @@
 
 int	ft_error(char	*error)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (error[i])
