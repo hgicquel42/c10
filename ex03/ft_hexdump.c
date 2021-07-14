@@ -1,44 +1,5 @@
 #include "ft.h"
 
-int		ft_error(char *program, char *file);
-
-void	ft_putchar(unsigned char c);
-
-void	ft_puthex(unsigned int c, int padding);
-
-void	ft_copy(char *source, char *dest);
-
-int		ft_same(char *source, char *dest);
-
-void	ft_fill(char *dest, int offset);
-
-int		ft_init(t_data *data);
-
-void	ft_print(t_data *data, int size)
-{
-	int	i;
-
-	ft_puthex(data->count, 7);
-	write(1, "  ", 2);
-	i = 0;
-	while (i < 16)
-	{
-		if (i < size)
-			ft_puthex((unsigned int)(unsigned char) data->buffer[i], 1);
-		else
-			write(1, "  ", 2);
-		write(1, " ", 1);
-		if (i == 7)
-			write(1, " ", 1);
-		i++;
-	}
-	i = 0;
-	write(1, " |", 2);
-	while (i < 16 && i < size)
-		ft_putchar(data->buffer[i++]);
-	write(1, "|\n", 2);
-}
-
 void	ft_flush(t_data *data, int size)
 {
 	if (size < SIZE)
@@ -47,7 +8,10 @@ void	ft_flush(t_data *data, int size)
 	{
 		data->first = 0;
 		data->same = 0;
-		ft_print(data, size);
+		if (data->flag)
+			ft_print_flag(data, size);
+		else
+			ft_print_normal(data, size);
 		ft_copy(data->buffer, data->last);
 	}
 	else
@@ -102,11 +66,13 @@ int	main(int argc, char **argv)
 	int		error;
 	t_data	data;
 
-	if (!ft_init(&data))
+	index = 1;
+	if (argc > 1 && !ft_strcmp(argv[1], "-C"))
+		index++;
+	if (!ft_init(&data, index == 2))
 		return (1);
-	if (argc < 3)
+	if (index == argc)
 		ft_read_file(0, &data);
-	index = 2;
 	error = 0;
 	while (index < argc)
 		error |= ft_read(argc, argv, index++, &data);

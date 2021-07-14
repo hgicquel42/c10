@@ -35,10 +35,11 @@ void	ft_fill(char *dest, int offset)
 		dest[i++] = 0;
 }
 
-int	ft_init(t_data *data)
+int	ft_init(t_data *data, int flag)
 {
 	data->count = 0;
 	data->offset = 0;
+	data->flag = flag;
 	data->first = 1;
 	data->same = 0;
 	data->buffer = malloc(SIZE * sizeof(char));

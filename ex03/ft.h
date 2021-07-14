@@ -16,6 +16,27 @@ typedef struct s_data
 	int		same;
 	int		offset;
 	int		count;
+	int		flag;
 }	t_data;
+
+int		ft_strcmp(char *a, char *b);
+
+int		ft_error(char *program, char *file);
+
+void	ft_putchar(unsigned char c);
+
+void	ft_puthex(unsigned int c, int padding);
+
+void	ft_copy(char *source, char *dest);
+
+int		ft_same(char *source, char *dest);
+
+void	ft_fill(char *dest, int offset);
+
+int		ft_init(t_data *data, int flag);
+
+void	ft_print_flag(t_data *data, int size);
+
+void	ft_print_normal(t_data *data, int size);
 
 #endif
