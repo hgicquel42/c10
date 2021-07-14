@@ -2,7 +2,8 @@ NAME = ft_hexdump
 
 FILES = \
 	ft_hexdump.c \
-	ft_utils.c
+	ft_buffers.c \
+	ft_output.c
 
 all: ${NAME}
 

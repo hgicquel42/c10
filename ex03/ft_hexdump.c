@@ -1,56 +1,18 @@
-#include <unistd.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <string.h>
-#include <libgen.h>
+#include "ft.h"
 
-//REMOVE
-#include <stdio.h>
-
-#define SIZE 16
-
-typedef struct s_data
-{
-	char	*last;
-	char	*buffer;
-	int		first;
-	int		same;
-	int		offset;
-	int		count;
-}	t_data;
-
-void	ft_puterr(char *s);
+int		ft_error(char *program, char *file);
 
 void	ft_putchar(unsigned char c);
 
 void	ft_puthex(unsigned int c, int padding);
 
-void	ft_bufcopy(char	*source, char *dest)
-{
-	int	i;
+void	ft_copy(char *source, char *dest);
 
-	i = 0 ;
-	while (i < SIZE)
-	{
-		dest[i] = source[i];
-		i++;
-	}
-}
+int		ft_same(char *source, char *dest);
 
-int	ft_same(t_data *data, int size)
-{
-	int	i;
+void	ft_fill(char *dest, int offset);
 
-	i = 0;
-	while (i < size)
-	{
-		if (data->buffer[i] != data->last[i])
-			return (0);
-		i++;
-	}
-	return (1);
-}
+int		ft_init(t_data *data);
 
 void	ft_print(t_data *data, int size)
 {
@@ -62,7 +24,7 @@ void	ft_print(t_data *data, int size)
 	while (i < 16)
 	{
 		if (i < size)
-			ft_puthex((unsigned int) (unsigned char) data->buffer[i], 1);
+			ft_puthex((unsigned int)(unsigned char) data->buffer[i], 1);
 		else
 			write(1, "  ", 2);
 		write(1, " ", 1);
@@ -79,17 +41,19 @@ void	ft_print(t_data *data, int size)
 
 void	ft_flush(t_data *data, int size)
 {
-	if (data->first || !ft_same(data, size))
+	if (size < SIZE)
+		ft_fill(data->buffer, size);
+	if (data->first || !ft_same(data->buffer, data->last))
 	{
 		data->first = 0;
 		data->same = 0;
 		ft_print(data, size);
-		ft_bufcopy(data->buffer, data->last);
+		ft_copy(data->buffer, data->last);
 	}
 	else
 	{
 		if (!data->same)
-			write(1, "*\n", 2);	
+			write(1, "*\n", 2);
 		data->same = 1;
 	}
 }
@@ -114,17 +78,6 @@ int	ft_read_file(int file, t_data *data)
 	return (0);
 }
 
-int	ft_error(char *program, char *file)
-{
-	ft_puterr(basename(program));
-	ft_puterr(": ");
-	ft_puterr(file);
-	ft_puterr(": ");
-	ft_puterr(strerror(errno));
-	ft_puterr("\n");
-	return (1);
-}
-
 int	ft_read(int argc, char **argv, int index, t_data *data)
 {
 	int		file;
@@ -141,24 +94,6 @@ int	ft_read(int argc, char **argv, int index, t_data *data)
 		return (1);
 	}
 	return (ft_read_file(file, data));
-}
-
-int	ft_init(t_data *data)
-{
-	int i;
-
-	data->count = 0;
-	data->offset = 0;
-	data->first = 1;
-	data->same = 0;
-	data->buffer = malloc(SIZE * sizeof(char));
-	data->last = malloc(SIZE * sizeof(char));
-	if (!data->buffer || !data->last)
-		return (0);
-	i = 0;
-	while (i < SIZE)
-		data->last[i++] = 0;
-	return (1);
 }
 
 int	main(int argc, char **argv)

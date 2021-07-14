@@ -1,21 +1,4 @@
-#include <unistd.h>
-
-int	ft_strcmp(char *a, char *b)
-{
-	while (*a && *a == *b)
-		a++, b++;
-	return (*a - *b);
-}
-
-void	ft_putout(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	write(1, s, i);
-}
+#include "ft.h"
 
 void	ft_puterr(char *s)
 {
@@ -25,6 +8,17 @@ void	ft_puterr(char *s)
 	while (s[i])
 		i++;
 	write(2, s, i);
+}
+
+int	ft_error(char *program, char *file)
+{
+	ft_puterr(basename(program));
+	ft_puterr(": ");
+	ft_puterr(file);
+	ft_puterr(": ");
+	ft_puterr(strerror(errno));
+	ft_puterr("\n");
+	return (1);
 }
 
 void	ft_putchar(unsigned char c)
