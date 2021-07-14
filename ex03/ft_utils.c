@@ -45,8 +45,11 @@ void	ft_puthex(unsigned int n, int padding)
 		ft_puthex(n / 16, padding - 1);
 		padding = 0;
 	}
-	while (padding)
-		write(1, "0", 1), padding--;
+	while (padding > 0)
+	{
+		write(1, "0", 1);
+		padding--;
+	}
 	c = g_hex[n % 16];
 	write(1, &c, 1);
 }

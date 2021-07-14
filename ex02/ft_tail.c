@@ -5,7 +5,7 @@
 #include <string.h>
 #include <libgen.h>
 
-#define SIZE 1024
+#define SIZE 24576
 
 int		ft_strcmp(char *a, char *b);
 
