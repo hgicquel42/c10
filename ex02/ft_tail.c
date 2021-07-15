@@ -1,61 +1,51 @@
-#include <unistd.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <string.h>
-#include <libgen.h>
+#include "ft.h"
 
-#define SIZE 16
+#define SIZE 1024
 
-char	*g_name;
-
-int		ft_strcmp(char *a, char *b);
-
-int		ft_atoi(char *s);
-
-void	ft_putout(char *s);
-
-void	ft_puterr(char *s);
-
-void	ft_copy(char *source, char *dest, int size);
-
-int	ft_error(char *file)
+char	*ft_alloc(char *old, int offset)
 {
-	ft_puterr(basename(g_name));
-	ft_puterr(": ");
-	ft_puterr(file);
-	ft_puterr(": ");
-	ft_puterr(strerror(errno));
-	ft_puterr("\n");
-	return (1);
+	char	*new;
+	int		i;
+
+	new = malloc((offset + SIZE) * sizeof(char));
+	if (!new)
+		return (0);
+	i = 0;
+	while (i < (offset + SIZE))
+	{
+		if (i < offset)
+			new[i] = old[i];
+		else
+			new[i] = 0;
+		i++;
+	}
+	if (old)
+		free(old);
+	return (new);
 }
 
 int	ft_read_file(int file, int number)
 {
-	char	*previous;
-	char	*current;
+	char	*buffer;
 	int		offset;
 	int		size;
 
 	offset = 0;
-	current = 0;
+	buffer = 0;
 	while (1)
 	{
-		previous = current;
-		current = malloc((offset + SIZE) * sizeof(char));
-		if (!current)
+		buffer = ft_alloc(buffer, offset);
+		if (!buffer)
 			return (1);
-		if (previous)
-		{
-			ft_copy(previous, current, offset);
-			free(previous);
-		}
-		size = read(file, &current[offset], SIZE);
+		size = read(file, &buffer[offset], SIZE);
 		if (!size)
 			break ;
 		offset += size;
 	}
-	write(1, &current[offset - number], number);
+	if (offset >= number)
+		write(1, &buffer[offset - number], number);
+	else
+		write(1, &buffer[0], offset);
 	return (0);
 }
 

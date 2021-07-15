@@ -1,4 +1,4 @@
-#include <unistd.h>
+#include "ft.h"
 
 int	ft_strcmp(char *a, char *b)
 {
@@ -39,14 +39,13 @@ void	ft_puterr(char *s)
 	write(2, s, i);
 }
 
-void	ft_copy(char *source, char *dest, int size)
+int	ft_error(char *file)
 {
-	int	i;
-
-	i = 0 ;
-	while (i < size)
-	{
-		dest[i] = source[i];
-		i++;
-	}
+	ft_puterr(basename(g_name));
+	ft_puterr(": ");
+	ft_puterr(file);
+	ft_puterr(": ");
+	ft_puterr(strerror(errno));
+	ft_puterr("\n");
+	return (1);
 }
