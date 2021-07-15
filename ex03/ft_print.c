@@ -39,7 +39,7 @@ void	ft_print_normal(t_data *data, int size)
 	int	i;
 
 	ft_puthex(data->count, 6);
-	write(1, " ", 2);
+	write(1, " ", 1);
 	i = 0;
 	while (i < 16)
 	{
@@ -47,8 +47,9 @@ void	ft_print_normal(t_data *data, int size)
 			ft_puthex((unsigned int)(unsigned char) data->buffer[i], 1);
 		else
 			write(1, "  ", 2);
-		write(1, " ", 1);
 		i++;
+		if (i < 16)
+			write(1, " ", 1);
 	}
 	write(1, "\n", 1);
 }
