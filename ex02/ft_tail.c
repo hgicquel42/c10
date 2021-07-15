@@ -49,7 +49,7 @@ int	ft_read_file(int file, int number)
 	return (0);
 }
 
-int	ft_read(char *arg, int number, int multiple, int last)
+int	ft_read(char *arg, int number, int multiple, int first)
 {
 	int		file;
 
@@ -58,7 +58,7 @@ int	ft_read(char *arg, int number, int multiple, int last)
 		return (ft_error(arg));
 	if (multiple)
 	{
-		if (last)
+		if (!first)
 			ft_putout("\n");
 		ft_putout("==> ");
 		ft_putout(arg);
@@ -73,7 +73,7 @@ int	main(int argc, char **argv)
 	int	index;
 	int	error;
 	int	multiple;
-	int	last;
+	int	first;
 
 	g_name = argv[0];
 	if (argc < 2)
@@ -87,10 +87,10 @@ int	main(int argc, char **argv)
 	if (argc - index == 0)
 		return (ft_read_file(0, number));
 	multiple = argc - index > 1;
+	first = index;
 	while (index < argc)
 	{
-		last = multiple && argc - index == 1;
-		error |= ft_read(argv[index], number, multiple, last);
+		error |= ft_read(argv[index], number, multiple, index == first);
 		index++;
 	}
 	return (error);
