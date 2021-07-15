@@ -82,9 +82,6 @@ int	main(int argc, char **argv)
 		data.count += data.offset;
 	}
 	if (data.count)
-	{
-		ft_puthex(data.count, 7);
-		write(1, "\n", 1);
-	}
+		ft_print_next(&data);
 	return (error);
 }

@@ -35,6 +35,8 @@ void	ft_fill(char *dest, int offset);
 
 int		ft_init(t_data *data, int flag);
 
+void	ft_print_next(t_data *data);
+
 void	ft_print_flag(t_data *data, int size);
 
 void	ft_print_normal(t_data *data, int size);

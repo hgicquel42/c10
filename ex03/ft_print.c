@@ -1,5 +1,14 @@
 #include "ft.h"
 
+void	ft_print_next(t_data *data)
+{
+	if (data->flag)
+		ft_puthex(data->count, 7);
+	else
+		ft_puthex(data->count, 6);
+	write(1, "\n", 1);
+}
+
 void	ft_print_flag(t_data *data, int size)
 {
 	int	i;
